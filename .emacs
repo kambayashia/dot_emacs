@@ -126,3 +126,6 @@
 (autoload 'smarty-mode "smarty-mode" "Smarty Mode" t)
 
 (put 'set-goal-column 'disabled nil)
+
+;;モードラインにカーソルがある位置の文字数を表示
+(column-number-mode 1)
