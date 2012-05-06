@@ -127,5 +127,8 @@
 
 (put 'set-goal-column 'disabled nil)
 
+;; assign c++ mode to c header
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+
 ;;モードラインにカーソルがある位置の文字数を表示
 (column-number-mode 1)
