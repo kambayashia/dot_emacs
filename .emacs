@@ -67,15 +67,6 @@
 ;;      (append '(("\\.as$" . actionscript-mode))
 ;;              auto-mode-alist))
 
-;;;; SubVersion Client
-;;(require 'psvn)
-;;;; 未変更は表示しない
-;;(setq svn-status-hide-unmodified t)
-
-
-(add-to-list 'load-path "/usr/share/doc/git-core/contrib/emacs")
-(require 'git)
-(require 'git-blame)
 
 (add-hook 'php-mode-hook
           (lambda ()
