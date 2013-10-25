@@ -29,6 +29,9 @@
 ;; stop at the end of the file, not just add lines
 (setq next-line-add-newlines nil)
 
+;; display text column number
+(column-number-mode 1)
+
 (when window-system
   ;; enable wheelmouse support by default
   (mwheel-install)
@@ -44,12 +47,12 @@
 
 ;; Set language japanese
 (set-language-environment "Japanese")
+(prefer-coding-system 'utf-8) 
 ;(set-default-coding-systems 'euc-japan)
 ;(set-terminal-coding-system 'euc-japan)
 ;(set-buffer-file-coding-system 'euc-japan)
 ;(set-keyboard-coding-system 'euc-jp)
 ;(setq default-buffer-coding-system 'euc-jp)
-(prefer-coding-system 'utf-8) 
 ;(set-default-coding-systems 'utf-8)
 ;(set-terminal-coding-system 'utf-8)
 ;(set-keyboard-coding-system 'utf-8)
@@ -69,14 +72,13 @@
 ;;              auto-mode-alist))
 
 
+; PHP mode
 (add-hook 'php-mode-hook
           (lambda ()
             (c-set-offset 'case-label' 4)
             (c-set-offset 'arglist-intro' 4)
             (c-set-offset 'arglist-cont-nonempty' 4)
             (c-set-offset 'arglist-close' 0)))
-
-; PHP mode
 (add-hook 'php-mode-user-hook
           '(lambda ()
              (setq tab-width 4)
@@ -91,13 +93,25 @@
     sgml-basic-offset 4
     )))
 
-(add-to-list 'auto-mode-alist (cons "\\.tpl\\'" 'smarty-mode))
 (autoload 'smarty-mode "smarty-mode" "Smarty Mode" t)
+(setq auto-mode-alist
+      (append
+       '((\"\\.tpl$\" . smarty-mode))
+       auto-mode-alist))
 
 (put 'set-goal-column 'disabled nil)
 
 ;; assign c++ mode to c header
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 
-;; display text column number
-(column-number-mode 1)
+; ruby
+(autoload 'ruby-mode "ruby-mode"
+  "Mode for editing ruby source files" t)
+(add-to-list 'auto-mode-alist '("\\.rb$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Capfile$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Gemfile$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Vagrantfile$" . ruby-mode))
+
+(require 'ruby-electric)
+(add-hook 'ruby-mode-hook '(lambda () (ruby-electric-mode t)))
+(setq ruby-electric-expand-delimiters-list nil)
