@@ -32,6 +32,9 @@
 ;; display text column number
 (column-number-mode 1)
 
+(setq-default truncate-partial-width-windows t)
+(setq-default truncate-lines t)
+
 (when window-system
   ;; enable wheelmouse support by default
   (mwheel-install)
@@ -75,6 +78,8 @@
 ; PHP mode
 (add-hook 'php-mode-hook
           (lambda ()
+            (setq tab-width 4)
+            (setq c-basic-offset 4)
             (c-set-offset 'case-label' 4)
             (c-set-offset 'arglist-intro' 4)
             (c-set-offset 'arglist-cont-nonempty' 4)
