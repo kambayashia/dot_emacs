@@ -99,10 +99,7 @@
     )))
 
 (autoload 'smarty-mode "smarty-mode" "Smarty Mode" t)
-(setq auto-mode-alist
-      (append
-       '((\"\\.tpl$\" . smarty-mode))
-       auto-mode-alist))
+(add-to-list 'auto-mode-alist '("\\.tpl$" . smarty-mode))
 
 (put 'set-goal-column 'disabled nil)
 
