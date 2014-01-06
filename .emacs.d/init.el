@@ -6,6 +6,10 @@
   (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
       (normal-top-level-add-subdirs-to-load-path)))
 
+;; auto-complete
+(require 'auto-complete-config)
+(ac-config-default)
+
 ;; Set up the keyboard so the delete key on both the regular keyboard
 ;; and the keypad delete the character under the cursor and to the right
 ;; under X, instead of the default, backspace behavior.
