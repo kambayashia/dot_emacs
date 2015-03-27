@@ -2657,7 +2657,8 @@ This fn does these things:
                           csharp-advise-revert-buffer
                           activate compile)
   (let ((is-flymake-enabled
-         (and (fboundp 'flymake-mode)
+;;         (and (fboundp 'flymake-mode)
+         (and (boundp 'flymake-mode)
               flymake-mode)))
     ;; disable
     (if is-flymake-enabled
@@ -5270,7 +5271,8 @@ The return value is meaningless, and is ignored by cc-mode.
                                    (statement-block-intro . +)
                                    (statement-case-intro  . +)
                                    (statement-case-open   . +)
-                                   (statement-cont        . +)
+;                                   (statement-cont        . +)
+                                   (statement-cont        . 0)
                                    (stream-op             . c-lineup-streamop)
                                    (string                . c-lineup-dont-change)
                                    (substatement          . +)
@@ -5907,5 +5909,21 @@ $0" "XML Documentation" nil)
 
 
 (provide 'csharp-mode)
+
+;; add myself
+(add-hook 'csharp-mode-hook
+          '(lambda()
+             (c-set-style "bsd")
+             (setq comment-column 40)
+             (setq c-basic-offset 4)
+             (setq indent-tabs-mode t)
+             (font-lock-add-magic-number)
+             ;; adjust offset
+             (c-set-offset 'substatement-open 0)
+             (c-set-offset 'case-label '+)
+             (c-set-offset 'arglist-intro '+)
+             (c-set-offset 'arglist-close 0)
+             )
+          )
 
 ;;; csharp-mode.el ends here
