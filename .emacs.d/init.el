@@ -1,5 +1,15 @@
 ;; Red Hat Linux default .emacs initialization file  ; -*- mode: emacs-lisp -*-
 
+(require 'package) ;; You might already have this line
+(add-to-list 'package-archives
+             '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.org/packages/") t)
+(when (< emacs-major-version 24)
+  ;; For important compatibility libraries like cl-lib
+  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
+(package-initialize) ;; You might already have this line
+
 ;; emacs-lisp local path
 (let ((default-directory (expand-file-name "~/.emacs.d/lisp")))
   (add-to-list 'load-path default-directory)
@@ -108,7 +118,7 @@
 (put 'set-goal-column 'disabled nil)
 
 ;; assign c++ mode to c header
-(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.h\\" . c++-mode))
 
 ; ruby
 (autoload 'ruby-mode "ruby-mode"
@@ -126,3 +136,26 @@
 (autoload 'csharp-mode "csharp-mode" "Major mode for editing C# code." t)
 (setq auto-mode-alist
       (append '(("\\.cs$" . csharp-mode)) auto-mode-alist))
+
+(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+(setq js2-mode-hook
+      '(lambda ()
+         (setq tab-width 2)
+         (setq js2-basic-offset 2)
+         (setq indent-tabs-mode nil)))
+
+(require 'web-mode)
+;(add-to-list 'auto-mode-alist '("\\.phtml$'" . web-mode))
+;(add-to-list 'auto-mode-alist '("\\.tpl\.php$'" . web-mode))
+;(add-to-list 'auto-mode-alist '("\\.[agj]sp$'" . web-mode))
+;(add-to-list 'auto-mode-alist '("\\.as[cp]x$'" . web-mode))
+;(add-to-list 'auto-mode-alist '("\\.erb$'" . web-mode))
+;(add-to-list 'auto-mode-alist '("\\.mustache$'" . web-mode))
+;(add-to-list 'auto-mode-alist '("\\.djhtml$'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))
+
+; golang
+(add-to-list 'auto-mode-alist '("\\.go$" . go-mode))
+(require 'go-autocomplete)
+(require 'auto-complete-config)
+(define-key ac-mode-map (kbd "M-TAB") 'auto-complete)
