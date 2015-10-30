@@ -2,3 +2,5 @@ escape \\\\
 cjkwidth on
 defencoding utf8
 encoding utf8 utf8
+
+shell -$SHELL

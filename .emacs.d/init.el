@@ -16,6 +16,8 @@
   (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
       (normal-top-level-add-subdirs-to-load-path)))
 
+(require 'anything-config)
+
 ;; auto-complete
 (require 'auto-complete-config)
 (ac-config-default)
@@ -65,29 +67,12 @@
 ;; Set language japanese
 (set-language-environment "Japanese")
 (prefer-coding-system 'utf-8) 
-;(set-default-coding-systems 'euc-japan)
-;(set-terminal-coding-system 'euc-japan)
-;(set-buffer-file-coding-system 'euc-japan)
-;(set-keyboard-coding-system 'euc-jp)
-;(setq default-buffer-coding-system 'euc-jp)
-;(set-default-coding-systems 'utf-8)
-;(set-terminal-coding-system 'utf-8)
-;(set-keyboard-coding-system 'utf-8)
-;(set-buffer-file-coding-system 'utf-8)
-;(setq default-buffer-coding-system 'utf-8)
 
 ;; No backup file
 (setq make-backup-files nil)
 
 ;;; Delete auto save files when exited
 (setq delete-auto-save-files t)
-
-;; ActionScript mode
-;;(autoload 'actionscript-mode "actionscript-mode" "actionscript" t)
-;;(setq auto-mode-alist
-;;      (append '(("\\.as$" . actionscript-mode))
-;;              auto-mode-alist))
-
 
 ; PHP mode
 (add-hook 'php-mode-hook
@@ -117,8 +102,9 @@
 
 (put 'set-goal-column 'disabled nil)
 
-;; assign c++ mode to c header
-(add-to-list 'auto-mode-alist '("\\.h\\" . c++-mode))
+;; assign c,c++ mode
+(add-to-list 'auto-mode-alist '("\\.c$" . c-mode))
+(add-to-list 'auto-mode-alist '("\\.h$" . c++-mode))
 
 ; ruby
 (autoload 'ruby-mode "ruby-mode"
@@ -145,13 +131,13 @@
          (setq indent-tabs-mode nil)))
 
 (require 'web-mode)
-;(add-to-list 'auto-mode-alist '("\\.phtml$'" . web-mode))
-;(add-to-list 'auto-mode-alist '("\\.tpl\.php$'" . web-mode))
-;(add-to-list 'auto-mode-alist '("\\.[agj]sp$'" . web-mode))
-;(add-to-list 'auto-mode-alist '("\\.as[cp]x$'" . web-mode))
-;(add-to-list 'auto-mode-alist '("\\.erb$'" . web-mode))
-;(add-to-list 'auto-mode-alist '("\\.mustache$'" . web-mode))
-;(add-to-list 'auto-mode-alist '("\\.djhtml$'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.phtml$'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.tpl\.php$'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.[agj]sp$'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.as[cp]x$'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.erb$'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.mustache$'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.djhtml$'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))
 
 ; golang
@@ -159,3 +145,7 @@
 (require 'go-autocomplete)
 (require 'auto-complete-config)
 (define-key ac-mode-map (kbd "M-TAB") 'auto-complete)
+
+; yaml
+(require 'yaml-mode)
+(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
