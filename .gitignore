@@ -1,3 +1,5 @@
 auto-save-list
 ac-comphist.dat
 abbrev_defs
+.emacs.d
+!.emacs.d/init.el

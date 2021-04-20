@@ -1,151 +1,19 @@
-;; Red Hat Linux default .emacs initialization file  ; -*- mode: emacs-lisp -*-
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
-(require 'package) ;; You might already have this line
-(add-to-list 'package-archives
-             '("melpa-stable" . "http://stable.melpa.org/packages/") t)
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.org/packages/") t)
-(when (< emacs-major-version 24)
-  ;; For important compatibility libraries like cl-lib
-  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
-(package-initialize) ;; You might already have this line
+(eval-when-compile
+  ;; Following line is not needed if use-package.el is in ~/.emacs.d
+  (add-to-list 'load-path "~/.emacs.d/use-package")
+  (require 'use-package))
 
-;; emacs-lisp local path
-(let ((default-directory (expand-file-name "~/.emacs.d/lisp")))
-  (add-to-list 'load-path default-directory)
-  (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
-      (normal-top-level-add-subdirs-to-load-path)))
-
-(require 'anything-config)
-
-;; auto-complete
-(require 'auto-complete-config)
-(ac-config-default)
-
-;; Set up the keyboard so the delete key on both the regular keyboard
-;; and the keypad delete the character under the cursor and to the right
-;; under X, instead of the default, backspace behavior.
-(global-set-key [delete] 'delete-char)
-(global-set-key [kp-delete] 'delete-char)
-
-;; C-h Key mapping
-(global-set-key "\C-h" 'delete-backward-char)
-
-(keyboard-translate ?\C-h ?\C-?) ; translate `C-h' to DEL 
-(keyboard-translate ?\C-? ?\C-h) ; translate DEL to `C-h'. 
-
-;; turn on font-lock mode
-(global-font-lock-mode t)
-;; enable visual feedback on selections
-(setq-default transient-mark-mode t)
-
-;; always end a file with a newline
-(setq require-final-newline t)
-
-;; stop at the end of the file, not just add lines
-(setq next-line-add-newlines nil)
-
-;; display text column number
-(column-number-mode 1)
-
-(setq-default truncate-partial-width-windows t)
-(setq-default truncate-lines t)
-
-(when window-system
-  ;; enable wheelmouse support by default
-  (mwheel-install)
-  ;; use extended compound-text coding for X clipboard
-  (set-selection-coding-system 'compound-text-with-extensions))
-
-;; Tab not space
-(setq-default indent-tabs-mode nil)
-
-;; set tab width
-(setq-default tab-width 4 indent-tabs-mode nil)
-;(setq-default tab-width 2 indent-tabs-mode nil)
-
-;; Set language japanese
-(set-language-environment "Japanese")
-(prefer-coding-system 'utf-8) 
-
-;; No backup file
-(setq make-backup-files nil)
-
-;;; Delete auto save files when exited
-(setq delete-auto-save-files t)
-
-; PHP mode
-(add-hook 'php-mode-hook
-          (lambda ()
-            (setq tab-width 4)
-            (setq c-basic-offset 4)
-            (c-set-offset 'case-label' 4)
-            (c-set-offset 'arglist-intro' 4)
-            (c-set-offset 'arglist-cont-nonempty' 4)
-            (c-set-offset 'arglist-close' 0)))
-(add-hook 'php-mode-user-hook
-          '(lambda ()
-             (setq tab-width 4)
-             (setq c-basic-offset 4)
-             (setq indent-tabs-mode nil)))
-
-; HTML mode
-(add-hook
- 'sgml-mode-hook
- (lambda ()
-   (setq
-    sgml-basic-offset 4
-    )))
-
-(autoload 'smarty-mode "smarty-mode" "Smarty Mode" t)
-(add-to-list 'auto-mode-alist '("\\.tpl$" . smarty-mode))
-
-(put 'set-goal-column 'disabled nil)
-
-;; assign c,c++ mode
-(add-to-list 'auto-mode-alist '("\\.c$" . c-mode))
-(add-to-list 'auto-mode-alist '("\\.h$" . c++-mode))
-
-; ruby
-(autoload 'ruby-mode "ruby-mode"
-  "Mode for editing ruby source files" t)
-(add-to-list 'auto-mode-alist '("\\.rb$" . ruby-mode))
-(add-to-list 'auto-mode-alist '("Capfile$" . ruby-mode))
-(add-to-list 'auto-mode-alist '("Gemfile$" . ruby-mode))
-(add-to-list 'auto-mode-alist '("Vagrantfile$" . ruby-mode))
-(add-to-list 'auto-mode-alist '("Berksfile$" . ruby-mode))
-
-(require 'ruby-electric)
-(add-hook 'ruby-mode-hook '(lambda () (ruby-electric-mode t)))
-(setq ruby-electric-expand-delimiters-list nil)
-
-(autoload 'csharp-mode "csharp-mode" "Major mode for editing C# code." t)
-(setq auto-mode-alist
-      (append '(("\\.cs$" . csharp-mode)) auto-mode-alist))
-
-(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-(setq js2-mode-hook
-      '(lambda ()
-         (setq tab-width 2)
-         (setq js2-basic-offset 2)
-         (setq indent-tabs-mode nil)))
-
-(require 'web-mode)
-(add-to-list 'auto-mode-alist '("\\.phtml$'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.tpl\.php$'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.[agj]sp$'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.as[cp]x$'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.erb$'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.mustache$'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.djhtml$'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))
-
-; golang
-(add-to-list 'auto-mode-alist '("\\.go$" . go-mode))
-(require 'go-autocomplete)
-(require 'auto-complete-config)
-(define-key ac-mode-map (kbd "M-TAB") 'auto-complete)
-
-; yaml
-(require 'yaml-mode)
-(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
+(straight-use-package 'helm)
