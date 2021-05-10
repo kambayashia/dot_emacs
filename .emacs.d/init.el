@@ -17,3 +17,5 @@
   (require 'use-package))
 
 (straight-use-package 'helm)
+
+(global-set-key "\C-h" `delete-backward-char)
