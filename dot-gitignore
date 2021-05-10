@@ -10,3 +10,5 @@ xcuserdata
 # cocoapods
 Pods/*
 bower_components
+
+docker-compose.windows.yml
